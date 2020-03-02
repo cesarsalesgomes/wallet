@@ -9,5 +9,6 @@ module.exports = {
         "dist/**/*.entity{.ts,.js}"
     ],
     "autoLoadEntities": true,
-    "logging": true
+    "logging": true,
+    "synchronize": true
 }

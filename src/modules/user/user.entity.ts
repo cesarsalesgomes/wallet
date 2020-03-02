@@ -1,26 +1,25 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import { Stock } from '../stock/stock.entity';
 
 @Entity({
-  name: 'TB_USR'
+  name: 'TB_USR',
 })
 export class User {
-  @PrimaryGeneratedColumn({
-    name: 'ID'
-  })
+  @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({
-    name: 'USR'
-  })
+  @Column()
   user: string;
 
-  @Column({
-    name: 'PSW'
-  })
+  @Column()
   password: string;
 
-  @Column({
-    name: 'NAME'
-  })
+  @Column()
   name: string;
+
+  @OneToMany(
+    () => Stock,
+    stock => stock.user,
+  )
+  stocks: Stock[];
 }
