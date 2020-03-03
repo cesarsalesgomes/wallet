@@ -3,6 +3,7 @@ import { JwtService } from '@nestjs/jwt';
 import { UserService } from '../user/user.service';
 import { User } from '../user/user.entity';
 import { AuthExceptions } from './auth.exceptions';
+import { compareSync } from 'bcrypt';
 
 @Injectable()
 export class AuthService {
@@ -11,7 +12,7 @@ export class AuthService {
   async validateUser(username: string, password: string): Promise<User> {
     const user = await this.userService.getByFilter(username);
 
-    if (!(user && user.password === password)) throw new UnauthorizedException({ message: AuthExceptions.INVALID_CREDENTIALS });
+    if (!(user && compareSync(password, user.password))) throw new UnauthorizedException({ message: AuthExceptions.INVALID_CREDENTIALS });
 
     return user;
   }

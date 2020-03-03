@@ -1,9 +1,10 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany, Unique } from 'typeorm';
 import { Stock } from '../stock/stock.entity';
 
 @Entity({
   name: 'TB_USR',
 })
+@Unique(['username'])
 export class User {
   @PrimaryGeneratedColumn()
   id: number;

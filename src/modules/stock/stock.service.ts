@@ -15,7 +15,7 @@ export class StockService {
     private readonly alphaVantageService: AlphaVantageService,
   ) {}
 
-  async createStock(user: User, stockDTO: StockDTO): Promise<StockDTO> {
+  async createStock(user: User, stockDTO: StockDTO): Promise<Stock> {
     const stock = new Stock();
 
     stock.value = await this.alphaVantageService.getStockValue(stockDTO.symbol);
