@@ -28,7 +28,7 @@ export class Stock {
   @Column({
     type: 'float',
   })
-  value: string;
+  value: number;
 
   @Column()
   quantity: number;

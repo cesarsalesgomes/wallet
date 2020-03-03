@@ -3,8 +3,8 @@ import { AlphaVantageService } from './alpha-vantage.service';
 import { AlphaVantageController } from './alpha-vantage.controller';
 
 @Module({
-  imports: [],
   controllers: [AlphaVantageController],
   providers: [AlphaVantageService],
+  exports: [AlphaVantageService],
 })
 export class AlphaVantageModule {}

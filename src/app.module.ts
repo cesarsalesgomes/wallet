@@ -6,9 +6,10 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AlphaVantageModule } from 'src/modules/alpha-vantage/alpha-vantage.module';
 import { UserModule } from 'src/modules/user/user.module';
 import { StockModule } from 'src/modules/stock/stock.module';
+import { AuthModule } from './modules/auth/auth.module';
 
 @Module({
-  imports: [AlphaVantageModule, UserModule, StockModule, ConfigModule.forRoot({ isGlobal: true }), TypeOrmModule.forRoot()],
+  imports: [AlphaVantageModule, UserModule, StockModule, ConfigModule.forRoot({ isGlobal: true }), TypeOrmModule.forRoot(), AuthModule],
   controllers: [],
   providers: [],
 })

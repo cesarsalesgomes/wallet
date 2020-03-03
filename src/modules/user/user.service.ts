@@ -16,7 +16,7 @@ export class UserService {
     private readonly usersRepository: Repository<User>,
   ) {}
 
-  async getUser(id: number, relations?: string[]): Promise<User> {
+  async getById(id: number, relations?: string[]): Promise<User> {
     const user = await this.usersRepository.findOne(id, { relations });
 
     if (!user) throw new InternalServerErrorException({ message: UserExceptions.USER_NOT_FOUND });
@@ -24,7 +24,15 @@ export class UserService {
     return user;
   }
 
+  async getByFilter(username: string): Promise<User> {
+    const user = await this.usersRepository.findOne({ where: { username } });
+
+    if (!user) throw new InternalServerErrorException({ message: UserExceptions.USER_NOT_FOUND });
+
+    return user;
+  }
+
   async getUserStocks(id: number): Promise<Stock[]> {
-    return (await this.getUser(id, ['stocks'])).stocks;
+    return (await this.getById(id, ['stocks'])).stocks;
   }
 }
