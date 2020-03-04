@@ -20,7 +20,7 @@ export class User {
 
   @OneToMany(
     () => Stock,
-    stock => stock.user,
+    stock => stock.user
   )
   stocks: Stock[];
 }

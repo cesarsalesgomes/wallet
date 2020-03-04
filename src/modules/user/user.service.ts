@@ -7,6 +7,7 @@ import { UserDTO } from './user.dto';
 import { hashSync, genSaltSync } from 'bcrypt';
 import { Stock } from '../stock/stock.entity';
 import { AlphaVantageService } from '../alpha-vantage/alpha-vantage.service';
+import { StockService } from '../stock/stock.service';
 
 @Injectable()
 export class UserService {
@@ -14,6 +15,7 @@ export class UserService {
     @InjectRepository(User)
     private readonly usersRepository: Repository<User>,
     private readonly alphaVantageService: AlphaVantageService,
+    private readonly stockService: StockService,
   ) {}
 
   async getById(id: number, relations?: string[]): Promise<User> {
@@ -59,7 +61,7 @@ export class UserService {
       stock.value = await this.alphaVantageService.getStockValue(stock.symbol);
     }
 
-    await this.usersRepository.save(user);
+    await this.stockService.updateStocks(stocks);
 
     return user.stocks;
   }

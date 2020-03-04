@@ -8,6 +8,7 @@ import { AlphaVantageModule } from '../alpha-vantage/alpha-vantage.module';
 @Module({
   imports: [TypeOrmModule.forFeature([Stock]), AlphaVantageModule],
   providers: [StockService],
+  exports: [StockService],
   controllers: [StockController],
 })
 export class StockModule {}

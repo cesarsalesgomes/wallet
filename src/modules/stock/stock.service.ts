@@ -32,4 +32,8 @@ export class StockService {
       throw new InternalServerErrorException({ message: StockExceptions.SAVE_ERROR });
     }
   }
+
+  async updateStocks(stocks: Stock[]): Promise<void> {
+    await this.stocksRepository.save(stocks);
+  }
 }

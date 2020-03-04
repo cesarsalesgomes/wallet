@@ -15,7 +15,7 @@ export class Stock {
 
   @ManyToOne(
     () => User,
-    user => user.stocks,
+    user => user.stocks
   )
   user: User;
 
