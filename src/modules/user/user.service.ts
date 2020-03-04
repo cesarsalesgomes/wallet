@@ -6,12 +6,14 @@ import { UserExceptions } from './user.exceptions';
 import { UserDTO } from './user.dto';
 import { hashSync, genSaltSync } from 'bcrypt';
 import { Stock } from '../stock/stock.entity';
+import { AlphaVantageService } from '../alpha-vantage/alpha-vantage.service';
 
 @Injectable()
 export class UserService {
   constructor(
     @InjectRepository(User)
     private readonly usersRepository: Repository<User>,
+    private readonly alphaVantageService: AlphaVantageService,
   ) {}
 
   async getById(id: number, relations?: string[]): Promise<User> {
@@ -44,7 +46,21 @@ export class UserService {
     }
   }
 
-  async getUserStocks(id: number): Promise<Stock[]> {
-    return (await this.getById(id, ['stocks'])).stocks;
+  async getUserStocks(user: User): Promise<Stock[]> {
+    return (await this.getById(user.id, ['stocks'])).stocks;
+  }
+
+  async updateUserStocks(user: User): Promise<Stock[]> {
+    user = await this.getById(user.id, ['stocks']);
+
+    const { stocks } = user;
+
+    for (const stock of stocks) {
+      stock.value = await this.alphaVantageService.getStockValue(stock.symbol);
+    }
+
+    await this.usersRepository.save(user);
+
+    return user.stocks;
   }
 }

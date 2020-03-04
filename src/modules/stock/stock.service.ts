@@ -15,7 +15,7 @@ export class StockService {
     private readonly alphaVantageService: AlphaVantageService,
   ) {}
 
-  async createStock(user: User, stockDTO: StockDTO): Promise<Stock> {
+  async createStock(user: User, stockDTO: StockDTO): Promise<void> {
     const stock = new Stock();
 
     stock.value = await this.alphaVantageService.getStockValue(stockDTO.symbol);
@@ -31,7 +31,5 @@ export class StockService {
     } catch (error) {
       throw new InternalServerErrorException({ message: StockExceptions.SAVE_ERROR });
     }
-
-    return stock;
   }
 }
